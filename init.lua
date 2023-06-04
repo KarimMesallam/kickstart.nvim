@@ -1,3 +1,10 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwplugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
 --[[
 
 =====================================================================
@@ -306,7 +313,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'php', 'vimdoc', 'vim', 'javascript'},
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -511,5 +518,15 @@ cmp.setup {
   },
 }
 
--- The line beneath this is called `modeline`. See `:help modeline`
+-- the line beneath this is called `modeline`. see `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Set correct line endings
+vim.cmd('au BufRead,BufNewFile * setlocal formatoptions-=cro')
+vim.cmd('au FileType * setlocal formatoptions-=cro')
+
+-- Preserve command history
+vim.o.history = 1000
+vim.o.undofile = true
+vim.o.undodir = vim.fn.expand("~/.config/nvim/undodir")
+vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
